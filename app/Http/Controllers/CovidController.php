@@ -194,4 +194,31 @@ class CovidController extends Controller
         ]);
     }
 
+    public function StatIndo(Request $request)
+    {
+    
+
+
+
+
+
+            return view('statIndo',[
+
+                'title' => 'COVID-19 Case - Ngaah.id',
+
+            ]);
+        
+    }
+
+    public function getFrame()
+    {
+
+        $data = file_get_contents('https://www.widgets.investing.com/live-currency-cross-rates?theme=lightTheme&pairs=9504,1645,1759,2034,2138');
+
+        print $data;
+
+    }
+
 }
+
+

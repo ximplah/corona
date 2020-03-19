@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/','CovidController@index');
+Route::get('/statindo','CovidController@StatIndo');
 
 Route::get('/update/data/first','CovidController@InsertDataFirst');
 Route::get('/data/summary','CovidController@getDataSummary');
 Route::get('/data/update','CovidController@DataUpdate');
 Route::get('/data/global/update','CovidController@updateGlobalSummary');
+Route::get('/frame','CovidController@getFrame');
