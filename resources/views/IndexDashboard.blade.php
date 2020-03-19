@@ -161,7 +161,7 @@
             <!-- Start Footerbar -->
             <div class="footerbar">
                 <footer class="footer">
-                    <p class="mb-0">© 2019 Theta - All Rights Reserved.</p>
+                    <p class="mb-0">Made By <a href="https://www.instagram.com/gilang_dandung/"> Gilang Dandung </a>  © {{ date('Y') }} Ngaah.id - All Rights Reserved.</p>
                 </footer>
             </div>
             <!-- End Footerbar -->

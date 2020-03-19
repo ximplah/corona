@@ -68,7 +68,7 @@ class CovidController extends Controller
         */
 
             $data = CountryModels::join('caselist','countrylist.id','=','caselist.country_id')
-                    ->where('date','2020-03-17')
+                    ->where('date',date('Y-m-d'))
                     ->select('country','confirmed','date')
                     ->groupBy('caselist.country_id')
                     ->orderBy('caselist.confirmed','DESC')
@@ -161,11 +161,13 @@ class CovidController extends Controller
             $global = GlobalDataModels::orderBy('id','DESC')->first();
 
             $data = CountryModels::join('caselist','countrylist.id','=','caselist.country_id')
-            ->where('date','2020-03-17')
+            ->where('date',date('Y-m-d'))
             ->select('countrylist.country','caselist.confirmed','caselist.deaths','caselist.recovered','caselist.date')
             ->groupBy('caselist.country_id')
             ->orderBy('caselist.confirmed','DESC')
             ->paginate(300);
+            
+  
             return view('IndexDashboard',[
 
                 'title' => 'COVID-19 Case - Ngaah.id',
