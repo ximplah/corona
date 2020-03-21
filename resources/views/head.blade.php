@@ -23,6 +23,16 @@
     <link href="/assets/css/flag-icon.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/assets/plugins/datatables/buttons.bootstrap4.min.css" re
+    l="stylesheet" type="text/css">
+    <link href="/assets/plugins/datatables/responsive.bootstrap4.min.css" re
+    l="stylesheet" type="text/css">
+    <link href="/assets/plugins/datatables/dataTables.bootstrap4.min.css" re
+    l="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" integrity="sha256-PHcOkPmOshsMBC+vtJdVr5Mwb7r0LkSVJPlPrp/IMpU=" crossorigin="anonymous" />
+    
+    
+    
     
     <!-- End css -->
 </head>

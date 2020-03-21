@@ -37,7 +37,10 @@
         </nav>
             <!-- End Breadcrumbbar -->
             <!-- Start Contentbar -->    
-            <div class="contentbar">                
+            <div class="contentbar">
+
+            <h3 class="text-center"> {{$country}} COVID-19 Case </h3>    
+            <hr/>
                 <!-- Start row -->
                 <div class="row">
 
@@ -103,7 +106,7 @@
                             <div class="card-header">                                
                                 <div class="row align-items-center">
                                     <div class="col-6">
-                                        <h5 class="card-title mb-0">Kasus COVID-19 Di Indonesia</h5>
+                                        <h5 class="card-title mb-0">Kasus COVID-19 Di {{$country}}</h5>
                                     </div>
                                     
                                 </div>
@@ -123,74 +126,6 @@
                     
                     <!-- End col -->
 
-                    <div class="col-md-12 col-lg-8 col-xl-12">
-                        <div class="card m-b-30">
-                            <div class="card-header">                                
-                                <div class="row align-items-center">
-                                    <div class="col-6">
-                                        <h5 class="card-title mb-0">Indonesia (IDR)</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div height="150" class="row align-items-center">
-                                    <!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/currencies/" rel="noopener" target="_blank"><span class="blue-text">Forex</span></a> by TradingView</div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-  {
-  "colorTheme": "light",
-  "dateRange": "12m",
-  "showChart": true,
-  "locale": "en",
-  "largeChartUrl": "",
-  "isTransparent": false,
-  "width": "100%",
-  "height": "660",
-  "plotLineColorGrowing": "rgba(255, 0, 0, 1)",
-  "plotLineColorFalling": "rgba(0, 255, 0, 1)",
-  "gridLineColor": "rgba(240, 243, 250, 1)",
-  "scaleFontColor": "rgba(120, 123, 134, 1)",
-  "belowLineFillColorGrowing": "rgba(33, 150, 243, 0.12)",
-  "belowLineFillColorFalling": "rgba(33, 150, 243, 0.12)",
-  "symbolActiveColor": "rgba(33, 150, 243, 0.12)",
-  "tabs": [
-    {
-      "title": "Forex",
-      "symbols": [
-        {
-          "s": "FX_IDC:USDIDR"
-        },
-        {
-          "s": "FX_IDC:EURIDR"
-        },
-        {
-          "s": "FX_IDC:GBPIDR"
-        },
-        {
-          "s": "FX_IDC:SGDIDR"
-        },
-        {
-          "s": "FX_IDC:CNYIDR"
-        }
-      ],
-      "originalTitle": "Forex"
-    }
-  ]
-}
-  </script>
-</div>
-<!-- TradingView Widget END -->
-   
-
-                               
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     
                     
                     
@@ -234,7 +169,7 @@
 
 function rendercase()
         {
-            var url = "{{url('data/indocase')}}";
+            var url = "{{url('json/')}}/{{$country}}";
             var date = new Array();
             var confirmed = new Array();
             var recovered = new Array();

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Cache;
+use Carbon\Carbon;
 
 /*
 | Use Models   
@@ -17,7 +19,10 @@ class CovidController extends Controller
     
     public function InsertDataFirst()
     {
-
+        
+        $yesterday = date("Y-m-d", strtotime( '-1 days' ) );
+        $countYesterday = CaseModels::whereDate('date', $yesterday )
+            ->delete();
         $dataset = "https://pomber.github.io/covid19/timeseries.json";
         $getDataSet = file_get_contents($dataset);
         $decodeJson = json_decode($getDataSet,true);
@@ -41,7 +46,7 @@ class CovidController extends Controller
             $datas = $data[$i][$d];
             $datas['country_id'] = $i+1;
 
-            CaseModels::firstOrCreate($datas);
+            CaseModels::updateOrCreate($datas);
 
             }
             
@@ -123,7 +128,6 @@ class CovidController extends Controller
             CaseModels::updateOrCreate([
                 'country_id' => $getCountryId->id,
                 'date' => date('Y-m-d')],[
-                'country_id' => $getCountryId->id,
                 'date' => date('Y-m-d'),
                 'confirmed' => $value['cases'],
                 'deaths' => $value['deaths'],
@@ -146,17 +150,53 @@ class CovidController extends Controller
     {
        
 
-        if($request->input('search')){
+
             
-            $users = UserModels::where('username', 'LIKE', '%' . $request->input('search') . '%')->paginate(15);
-            return view('IndexDashboard',[
-    
-                'title' => 'COVID-19 Case - Ngaah.id',
-                'users' => $users
-    
-            ]);
-        
-        }else{
+            
+            $this_day = date("Y-m-d");
+            
+            $yesterday = date("Y-m-d", strtotime( '-1 days' ) );
+            $countYesterday = GlobalDataModels::whereDate('created_at', $yesterday )
+            ->orderBy('id','DESC')
+            ->first();
+            
+             $Now = GlobalDataModels::whereDate('created_at', date('Y-m-d') )
+            ->orderBy('id','DESC')
+            ->first();
+            
+            
+            
+            
+            $this_days_plus = [
+                
+                    'cases' => ($Now->cases - $countYesterday->cases),
+                    'deaths' => ($Now->deaths - $countYesterday->deaths),
+                    'recovered' => ($Now->recovered - $countYesterday->recovered)
+                
+                ];
+                
+            if($this_days_plus['cases'] <= 0 OR $this_days_plus['deaths'] <= 0 OR $this_days_plus['recovered'] <= 0 )
+            {
+                
+                $result_days = [
+                
+                    'cases' => ($Now->cases - $countYesterday->cases),
+                    'deaths' => ($Now->deaths - $countYesterday->deaths),
+                    'recovered' => ($Now->recovered - $countYesterday->recovered)
+                
+                ];
+                
+            }else{
+                
+                $result_days = [
+                
+                    'cases' => "+{$this_days_plus['cases']}",
+                    'deaths' => "+{$this_days_plus['deaths']}",
+                    'recovered' => "+{$this_days_plus['recovered']}"
+                
+                ];
+            }
+            
 
             $global = GlobalDataModels::orderBy('id','DESC')->first();
 
@@ -172,10 +212,12 @@ class CovidController extends Controller
 
                 'title' => 'COVID-19 Case - Ngaah.id',
                 'data' => $data,
-                'global' => $global
+                'global' => $global,
+                'this_days' => $result_days,
+                'yesterday' => $countYesterday
 
             ]);
-        }
+        
     }
 
     public function updateGlobalSummary()
@@ -197,17 +239,24 @@ class CovidController extends Controller
     public function StatIndo(Request $request)
     {
     
-
-
-
-
-
+        
+        $data = CaseModels::where(
+                ['country_id' => '54',
+                'date' => date('Y-m-d')]
+                )
+            ->get();
+        
+                  
             return view('statIndo',[
-
-                'title' => 'COVID-19 Case - Ngaah.id',
+                
+                
+                'data' => $data[0],
+                'title' => 'COVID-19 Indonesia - Ngaah.id',
+                'yesterday' => $countYesterday,
+                'this_days' => $result_days
 
             ]);
-        
+ 
     }
 
     public function getFrame()
@@ -217,6 +266,141 @@ class CovidController extends Controller
 
         print $data;
 
+    }
+
+
+    public function IndoCase()
+    {
+        Cache::remember('indocase', 300, function () {
+            return CaseModels::where('country_id','54')
+            ->whereDate('date', '>', Carbon::now()->subDays(30))
+            ->orderBy('date','ASC')
+            ->get();
+        });
+        
+        
+        $data = [];
+        foreach( Cache::get('indocase') as $key => $value ){
+
+            $id = $key + 1 ;
+            $data[] = [
+
+                
+                'date' => $value['date'],
+                'confirmed' => $value['confirmed'],
+                'recovered' => $value['recovered'],
+                'deaths' => $value['deaths']
+
+            ];
+
+
+        }
+
+        return $data;
+    }
+
+
+
+    public function GlobalCase()
+    {
+        Cache::remember('globalcase', 1, function () {
+            
+        });
+        
+        $ngaah =  CaseModels::groupBy('date')
+        ->selectRaw('date, date as tanggal') 
+        ->selectRaw('confirmed, sum(confirmed) as confirmed')
+        ->selectRaw('recovered, sum(recovered) as recovered')
+        ->selectRaw('deaths, sum(deaths) as deaths')
+        ->whereDate('date', '>', Carbon::now()->subDays(30))
+        ->orderBy('date','ASC')
+        ->get();
+
+        $data = [];
+        foreach( $ngaah as $key => $value ){
+
+            if($value['date'] == date('Y-m-d')){ }else{
+         
+            $data[] = [
+                
+                
+                
+                'date' => $value['date'],
+                'confirmed' => $value['confirmed'],
+                'recovered' => $value['recovered'],
+                'deaths' => $value['deaths']
+
+            ];
+            
+                }
+
+
+        }
+
+        return $data;
+    }
+
+
+
+    public static function InfoCountry($country)
+    {
+
+        $DB = CountryModels::Where('country',$country)
+        ->select('id')
+        ->first();
+
+        if(!$DB){ exit; }
+
+        $data = CaseModels::where(
+            ['country_id' => $DB->id,
+            'date' => date('Y-m-d')]
+            )
+        ->get();
+
+        return view('StatDynamic',[
+
+            'title' => "{$country} COVID-19 Statistic - Ngaah.id",
+            'country' => $country,
+            'data' => $data[0]
+
+        ]);
+
+    }
+
+
+    public static function DynamicCase($country)
+    {
+            
+
+            $DB = CountryModels::Where('country',$country)
+            ->select('id')
+            ->first();
+            if(!$DB){ exit; }
+        
+           $datas =  CaseModels::where('country_id',$DB->id)
+            ->whereDate('date', '>', Carbon::now()->subDays(30))
+            ->orderBy('date','ASC')
+            ->get();
+      
+        
+        
+        $data = [];
+        foreach( $datas as $key => $value ){
+
+            $data[] = [
+
+                
+                'date' => $value['date'],
+                'confirmed' => $value['confirmed'],
+                'recovered' => $value['recovered'],
+                'deaths' => $value['deaths']
+
+            ];
+
+
+        }
+
+        return $data;
     }
 
 }

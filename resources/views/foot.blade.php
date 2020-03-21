@@ -17,6 +17,14 @@
     <script src="/assets/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
     <script src="/assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
     <script src="/assets/plugins/sweet-alert2/sweetalert2.min.js"></script>
+    <script src="/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/assets/plugins/datatables/dataTables.buttons.min.js"></script>
+    <script src="/assets/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="/assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    
+
+
+    
     <!-- Custom Dashboard Social js -->   
     <!-- Core js -->
     <script src="/assets/js/core.js"></script>

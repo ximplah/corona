@@ -26,75 +26,115 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                
+            </li>
+             <li class="nav-item ">
+                <a class="nav-link" href="/statindo">Statistik Indo <span class="sr-only">(current)</span></a>
             </li>
 
         </div>
         </nav>
             <!-- End Breadcrumbbar -->
             <!-- Start Contentbar -->    
-            <div class="contentbar">                
+            
+            <div class="contentbar">  
+            <p><i class="mdi mdi-circle text-danger mr-2 animated infinite flash"></i>Live Update<span class="float-right">{{ date('d-M-Y H:m:s') }}</span></p>
+            
+            <div class="alert alert-info" role="alert">
+  <strong>Statistik Indonesia Only</strong> <a href="/statindo" >Klik Disini! </a>
+</div>
                 <!-- Start row -->
                 <div class="row">
+                    
                 <!-- Start col -->
-                <div class="col-md-12 col-lg-6 col-xl-4">
+                <div class="col-md-12 col-lg-2 col-xl-2">
                         <div class="card m-b-30 ">
-                            <div class="card-header">                                
+                            <div class="card-header">
                                 <div class="row align-items-center">
-                                    <div class="col-6">
-                                        <h5 class="card-title mb-0">Total Kasus</h5>
-                                    </div>
-                                    
+                                        <h5 class="card-title mb-0 text-center">Total Kasus</h5>
                                 </div>
                             </div>
-                            <div class="card-body text-center pb-0 px-0 bg-primary text-white">
+                            <div class="card-body text-center pb-0 px-0 bg-danger text-white">
                             <h3 class="text-white"> {{$global->cases}} </h3>
                             <span>Kasus COVID-19</span>
-                            
                         </div>
                         </div>
                     </div>
                     <!-- End col -->
                     <!-- Start col -->
-                    <div class="col-md-12 col-lg-6 col-xl-4">
+                    <div class="col-md-12 col-lg-2 col-xl-2">
                         <div class="card m-b-30">
-                            <div class="card-header">                                
+                            <div class="card-header">
                                 <div class="row align-items-center">
-                                    <div class="col-6">
-                                        <h5 class="card-title mb-0">Total Kematian</h5>
-                                    </div>
-                                    
+                                        <h5 class="card-title mb-0 text-center">Total Kematian</h5>
                                 </div>
                             </div>
                             <div class="card-body text-center pb-0 px-0 bg-danger text-white">
                             <h3 class="text-white"> {{$global->deaths}} </h3>
                             <span>Total Kematian</span>
-                            
                         </div>
                         </div>
                     </div>
                     <!-- End col -->                    
                     <!-- Start col -->
-                    <div class="col-md-12 col-lg-6 col-xl-4">
+                    <div class="col-md-12 col-lg-2 col-xl-2">
                         <div class="card m-b-30">
-                            <div class="card-header">                                
+                            <div class="card-header">
                                 <div class="row align-items-center">
-                                    <div class="col-6">
-                                        <h5 class="card-title mb-0">Total Sembuh</h5>
-                                    </div>
-                                    
+                                        <h5 class="card-title mb-0 text-center">Total Sembuh</h5>
                                 </div>
                             </div>
                             <div class="card-body text-center pb-0 px-0 bg-success text-white">
                             <h3 class="text-white"> {{$global->recovered}} </h3>
                             <span>Total Sembuh </span>
-                           
+                        </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12 col-lg-2 col-xl-2">
+                        <div class="card m-b-30 ">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                        <h5 class="card-title mb-0 text-center">Kasus Hari Ini</h5>
+                                </div>
+                            </div>
+                            <div class="card-body text-center pb-0 px-0 bg-danger text-white">
+                            <h3 class="text-white"> {{$this_days['cases']}} </h3>
+                            <span>Kasus Hari Ini</span>
                         </div>
                         </div>
                     </div>
                     <!-- End col -->
                     <!-- Start col -->
-                    
+                    <div class="col-md-12 col-lg-2 col-xl-2">
+                        <div class="card m-b-30">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                        <h5 class="card-title mb-0 text-center"> Kematian Hari Ini</h5>
+                                </div>
+                            </div>
+                            <div class="card-body text-center pb-0 px-0 bg-danger text-white">
+                            <h3 class="text-white"> {{$this_days['deaths']}} </h3>
+                            <span>Kematian Hari Ini</span>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- End col -->                    
+                    <!-- Start col -->
+                    <div class="col-md-12 col-lg-2 col-xl-2">
+                        <div class="card m-b-30">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                        <h5 class="card-title mb-0 text-center"> Sembuh Hari Ini</h5>
+                                </div>
+                            </div>
+                            <div class="card-body text-center pb-0 px-0 bg-success text-white">
+                            <h3 class="text-white"> {{$this_days['recovered']}} </h3>
+                            <span>Sembuh Hari Ini </span>
+                        </div>
+                        </div>
+                    </div>
                     <!-- End col -->
                     <!-- Start col -->
                     <div class="col-md-12 col-lg-12 col-xl-12">
@@ -102,16 +142,39 @@
                             <div class="card-header">                                
                                 <div class="row align-items-center">
                                     <div class="col-6">
+                                        <h5 class="card-title mb-0">Statistik Kasus COVID</h5>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="card-body text-center pb-0 px-0">
+                           
+                            <canvas height="150" id="indocase" class="chartjs-chart mt-4"></canvas>
+
+                            
+                        </div>
+                        </div>
+                    </div>
+                    <!-- End col -->
+                    <!-- Start col -->
+                    </div></div></div>
+                   
+                    <div class="">
+                        <div class="card m-b-30">
+                            <div class="card-header">                                
+                                <div class="row align-items-center">
+                                    <div class="col-6">
                                         <h5 class="card-title mb-0">List Kasus Korona </h5>
                                     </div>
                                     <div class="table-responsive">
-                                    <table class="table table-bordered">
+                                    <table id="datatable" class="table table-bordered">
                                         <thead>
                                           <tr>
                                           <th width="3%" class="table-dark bg-dark">No</th>
                                             <th class="table-dark bg-primary">Negara</th>
                                             <th class="bg-warning" >Kasus</th>
-                                            <th class="bg-danger">Kematian ( Rasio )</th>
+                                            <th class="bg-danger">Kematian</th>
+                                            <th class="bg-danger">Rasio Kematian</th>
                                             <th class="bg-success">Sembuh</th>
                                            
 
@@ -120,14 +183,21 @@
                                         </thead>
                                         <tbody>
                                         @foreach ($data as $key => $datas)
-                                          <tr>
+                                        
+                                          <tr class='clickable-row' data-href='/info/{{$datas->country}}'>
+                                          
                                               <td>{{ $key + 1 }}</td>
                                               <td class="table-info"><strong> {{ $datas->country }} </strong> </td>
                                               <td class="table-warning">{{ $datas->confirmed }}</td>
-                                              <td class="table-danger">{{ $datas->deaths }} ({{ number_format($datas->deaths / $datas->confirmed * 100,2) }}%)</td>
+                                             
+                                              <td class="table-danger">{{ $datas->deaths }}</td>
+                                             <td class="table-danger">
+                                              ({{ number_format($datas->deaths / $datas->confirmed * 100,2) }}%)
+                                             </td>
                                               <td class="table-success">{{ $datas->recovered }}</td>
-                                      
+                   
                                           </tr>
+                                        
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -147,6 +217,7 @@
                             </div>
                         </div>
                     </div>
+                   
                     <!-- End col -->
 
 
@@ -187,4 +258,103 @@
 
 
         
+        function rendercase()
+        {
+            var url = "{{url('data/globalcase')}}";
+            var date = new Array();
+            var confirmed = new Array();
+            var recovered = new Array();
+            var deaths = new Array();
+            $.get(url, function(response){
+            response.forEach(function(data){
+                date.push(data.date);
+                confirmed.push(data.confirmed);
+                recovered.push(data.recovered);
+                deaths.push(data.deaths);
+            });
+            var ctx = document.getElementById("indocase").getContext('2d');
+                var myChart = new Chart(ctx, {
+                  type: 'line',
+                  data: {
+                      labels:date,
+                      datasets: [
+                        {
+                          label: 'Case',
+                          data: confirmed,                     
+					      borderColor: "#f1c40f",
+                          fill:false,
+                          
+                        },
+                        {
+                          label: 'Sembuh',
+                          data: recovered,
+                          borderColor: "green"
+                          
+                        },
+                        {
+                          label: 'Kematian',
+                          data: deaths,
+                          borderColor : "red"
+                          
+                        },
+                      ]
+                  },
+                  
+                options: {
+        
+                    responsive: true,
+                    maintainAspectRatio: true, 
+                    aspectRatio : 2,
+                   
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: false
+                    },
+                    scales: {
+                    xAxes: [{
+                        display: false,       
+                        gridLines: {
+                            color: '#e9eff9',
+                            lineWidth: 0,
+                            borderDash: [3]
+                        }
+                    }],
+                    yAxes: [{
+                    	display: false,
+                        gridLines: {
+                            color: '#e9eff9',
+                            lineWidth: 1,
+                            borderDash: [3]
+                        },
+		              	
+                    }],
+                    },
+                    
+                    
+                
+                }
+              });
+          });
+        }
+
+        rendercase();
+        
+        
+        $(document).ready( function () {
+            $('#datatable').DataTable({
+            
+              "pageLength": 100,
+              "order": [[ 2, "ASC" ]]
+                
+            });
+        } );
+
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+
         </script>
